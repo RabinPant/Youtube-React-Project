@@ -17,6 +17,7 @@ const store = configureStore({});
 export default store;
 ```
 ### create a slice
+```
 import { createSlice } from "@reduxjs/toolkit";
 
 const toggleSlice = createSlice({
@@ -33,7 +34,7 @@ const toggleSlice = createSlice({
 
 export const { toggle } = toggleSlice.actions;
 export default toggleSlice.reducer;
-
+```
 3)Add Toggle Slice into the store:
 ```
 import { configureStore } from "@reduxjs/toolkit";
