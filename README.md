@@ -76,5 +76,12 @@ const Body = () => {
   );
 };
 ```
+The Whole flow of the react-redux works like this:<br>
+
+whenever we have a click event or any other kinds of event then at that<br>
+we dispatch an action<br>
+That dispatch action calls a reducer function<br>
+This reducer function will chnage the state of the property<br>
+Afterwards, if we want to use that reducer then we have to make us of <b>Selector</b>
 
 
