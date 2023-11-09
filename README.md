@@ -83,6 +83,16 @@ we dispatch an action<br>
 That dispatch action calls a reducer function<br>
 This reducer function will chnage the state of the property<br>
 Afterwards, if we want to use that reducer then we have to make us of <b>Selector</b>
+while suscribing to the store we have to suscribe to the right portion of the store<br>
+```
+  const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+```
+In this code we are suscribing to the only one portion of the store i.e isMenuOpen<br>
+I can get access to whole store just by removing the .app.isMenuOpen. if I do this then<br>
+the whole store will render which will render usless data and slow our performance.<br>
+
+In the earlier version of redux it used to say "NEVER MUTATE(change) the state"<br>
+now in new version it says "MUTATE" the sate
 
 # Calling the live API of youtube GET videos Method:
 
