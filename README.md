@@ -84,4 +84,39 @@ That dispatch action calls a reducer function<br>
 This reducer function will chnage the state of the property<br>
 Afterwards, if we want to use that reducer then we have to make us of <b>Selector</b>
 
+# Calling the live API of youtube GET videos Method:
 
+```
+const API_KEY = "AIzaSyAsveZv68fS4WA2CozNbkV7VCVxql1EQBs";
+
+export const YOTUBE_VIDEO_API =
+  "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&key=" +
+  API_KEY;
+```
+```
+import React, { useEffect, useState } from "react";
+import { YOTUBE_VIDEO_API } from "../utils/constant";
+import VideoCard from "./VideoCard";
+const VideoContainer = () => {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    getVideo();
+  }, []);
+  const getVideo = async () => {
+    const videoList = await fetch(YOTUBE_VIDEO_API);
+    const json = await videoList.json();
+    console.log(json.items);
+    setVideos(json.items);
+  };
+  return (
+    <div className="flex flex-wrap">
+      {videos.map((video) => {
+        return <VideoCard data={video} />;
+      })}
+    </div>
+  );
+};
+
+export default VideoContainer;
+```
