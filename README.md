@@ -151,3 +151,60 @@ const VideoCard = ({ data }) => {
 
 export default VideoCard;
 ```
+
+# Setting Up the Watch Page After user Clicks on the card:
+
+### Setting up the routing:
+npm i react-router-dom
+<br>
+Now setting up the router to navigate to different pages:
+```
+const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Body />,
+      children: [
+        {
+          path: "/",
+          element: <MainContainer />,
+        },
+        {
+          path: "/watch",
+          element: <WatchPage />,
+        },
+      ],
+    },
+  ]);
+  return (
+    <Provider store={store}>
+      <div className="App">
+        <Head />
+        <RouterProvider router={appRouter} />
+      </div>
+    </Provider>
+```
+```
+const Body = () => {
+  const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+
+  return (
+    <div className="grid grid-flow-col">
+      {isMenuOpen && <SideBar />}
+      <Outlet />
+    </div>
+  );
+};
+```
+we have a page where header and sidebar shoudl be constant and only the main container should change according to the navigation<br>
+First we created a WatchPage<br>
+
+Then we want our body to change dynamically. when / then load main container when /watch load watch page:<br>
+
+We have given <RouterProvider > in place of <Body/> and this <RouterProvider> is loading accoding to the appRouter const obj<br>
+
+Body has two part, one is main container and another is sidebar. we want sidebar all the time so main container has to be dynamic.<br>
+Sometime main container has to load and watch page according to the url.<br>
+
+In place of <MainContainer> we have put <Outlet> and given its childern in app.js file. <br>
+
+Now if we test then /watch will change the body main container to watch page and / change to the main container.
