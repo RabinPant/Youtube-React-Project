@@ -200,11 +200,15 @@ First we created a WatchPage<br>
 
 Then we want our body to change dynamically. when / then load main container when /watch load watch page:<br>
 
-We have given <RouterProvider > in place of <Body/> and this <RouterProvider> is loading accoding to the appRouter const obj<br>
+We have given <RouterProvider > in place of Body and this RouterProvider is loading accoding to the appRouter const obj<br>
 
 Body has two part, one is main container and another is sidebar. we want sidebar all the time so main container has to be dynamic.<br>
 Sometime main container has to load and watch page according to the url.<br>
 
-In place of <MainContainer> we have put <Outlet> and given its childern in app.js file. <br>
+In place of MainContainer we have put Outlet and given its childern in app.js file. <br>
 
 Now if we test then /watch will change the body main container to watch page and / change to the main container.
+
+
+
+
