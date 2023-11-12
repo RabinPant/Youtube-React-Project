@@ -209,6 +209,70 @@ In place of MainContainer we have put Outlet and given its childern in app.js fi
 
 Now if we test then /watch will change the body main container to watch page and / change to the main container.
 
+# Search sugegstion API:
 
+```
+const [searchQuery, setSeqrchQuery] = useState("");
 
+  console.log(searchQuery);
+
+  useEffect(() => {
+    // make an api call after every key press
+    // but if the difference between 2 API calls is less than 200ms
+    // decline the API call
+
+    const timer = setTimeout(() => getSeachSuggestion(), 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+  /* 
+    key i - press
+    render() the component
+    useEffect() = get call to the API
+    start timeer => make api call after 200 ms
+
+  key - ip
+  -destroy the component(useEffect return method)
+  -re-render the component
+  -useEffect()
+  -start timer => make an api call after 200ms
+
+  setTimeout(200) -make an API call 
+  */
+
+  const getSeachSuggestion = async () => {
+    const data = await fetch(YOUTUBR_SEARCH_API + searchQuery);
+    const json = await data.json();
+    console.log(json[1]);
+  };
+  const toggleMenuHandler = () => {
+    dispatch(toggle());
+  };
+  return (
+    <div className="grid grid-flow-col p-2 m-2 shadow-lg">
+      <div className="flex col-span-1">
+        <img
+          className="h-10 cursor-pointer"
+          src="hamburger.png"
+          alt="menu"
+          onClick={() => toggleMenuHandler()}
+        />
+        <img
+          className="h-7 mx-2 cursor-pointer my-2"
+          alt="youtube"
+          src="https://upload.wikimedia.org/wikipedia/commons/3/34/YouTube_logo_%282017%29.png"
+        />
+      </div>
+      <div className="col-span-10 flex h-8 my-3 ml-6">
+        <input
+          className="w-1/2  border border-gray-600 rounded-l-xl p-1"
+          type="text"
+          value={searchQuery}
+          onChange={(e) => {
+            setSeqrchQuery(e.target.value);
+          }}
+        />
+```
 
