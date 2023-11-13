@@ -275,6 +275,7 @@ const [searchQuery, setSeqrchQuery] = useState("");
           }}
         />
 ```
+
 # Get the drop down menu to hide when we scroll
 
 ```
@@ -306,4 +307,89 @@ const controlDropDown = () => {
      
     };
   }, [searchQuery]);
+```
+# Cache feature for the search functionality:
+
+- How does search functionlity works in youtube? <br>
+
+  This is pretty simple, like in above code snippet. Every time when users type something in the search input box<br>
+  then an API is called along with the value that was written in the input box<br>
+  in our code we have made after every 200ms the API is called between the users key stroke.<br>
+
+  ### To build the cache we have to make use of Redux store
+
+  - first we have to create a slice <br>
+
+
+  ```
+  import { createSlice } from "@reduxjs/toolkit";
+
+const searchSlice = createSlice({
+  name: "search",
+  initialState: {},
+  reducers: {
+    cacheResults: (state, action) => {
+      state = Object.assign(state, action.payload);
+    },
+  },
+});
+
+export const { cacheResults } = searchSlice.actions;
+
+export default searchSlice.reducer;
+```
+Now load this SLice into the store:
+
+```
+
+const store = configureStore({
+  reducer: {
+    app: toggleSlice,
+    search: searchSlice,
+  },
+});
+
+export default store;
+```
+To use the searchSlice store make use of useSelector:
+```
+const searchCache = useSelector((store) => store.search);
+```
+now if the data is already present in out searchCache then don't make an API call otherwise make an API call:
+
+```
+ useEffect(() => {
+    
+    if (searchCache[searchQuery]) {
+      setSuggestions(searchCache[searchQuery]);
+    } else {
+      getSeachSuggestion();
+    }
+    return () => {
+    
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+
+```
+```
+const getSeachSuggestion = async () => {
+    const data = await fetch(YOUTUBR_SEARCH_API + searchQuery);
+    const json = await data.json();
+    //console.log(json[1]);
+    setSuggestions(json[1]);
+
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
+  };
+```
+if you see the above code of our slice there we have add the new object that we'll be sending from out dispatch action:<br>
+```
+reducers: {
+    cacheResults: (state, action) => {
+      state = Object.assign(state, action.payload);
+    },
 ```
