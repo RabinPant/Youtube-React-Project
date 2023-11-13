@@ -323,8 +323,7 @@ const controlDropDown = () => {
 
   ```
   import { createSlice } from "@reduxjs/toolkit";
-
-const searchSlice = createSlice({
+  const searchSlice = createSlice({
   name: "search",
   initialState: {},
   reducers: {
@@ -333,15 +332,12 @@ const searchSlice = createSlice({
     },
   },
 });
-
 export const { cacheResults } = searchSlice.actions;
-
 export default searchSlice.reducer;
 ```
 Now load this SLice into the store:
 
 ```
-
 const store = configureStore({
   reducer: {
     app: toggleSlice,
@@ -356,7 +352,6 @@ To use the searchSlice store make use of useSelector:
 const searchCache = useSelector((store) => store.search);
 ```
 now if the data is already present in out searchCache then don't make an API call otherwise make an API call:
-
 ```
  useEffect(() => {
     
