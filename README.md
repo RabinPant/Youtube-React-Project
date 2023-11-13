@@ -275,4 +275,35 @@ const [searchQuery, setSeqrchQuery] = useState("");
           }}
         />
 ```
+# Get the drop down menu to hide when we scroll
 
+```
+const controlDropDown = () => {
+    if (window.scrollY > 1) {
+      setShowSuggestion(false);
+    } else {
+      setShowSuggestion(true);
+    }
+  };
+```
+- setShowSuggestion is the hook that display the data <br>
+- Here in above code snippet the hook setShowSuggestion value will be true for the first time because the scroll value is less than 1 <br>
+- As when we scroll the value of the scrollY will increase and the setSuggestion value will be set to false <br>
+
+### we will have to call this code in the useEffect:
+```
+ useEffect(() => {
+    window.addEventListener("scroll", controlDropDown);
+```
+### Every time component unmounts we'll have to clear this event from the useEffect:
+
+```
+ useEffect(() => {
+    window.addEventListener("scroll", controlDropDown);
+    
+    return () => {
+      window.removeEventListener("scroll", controlDropDown);
+     
+    };
+  }, [searchQuery]);
+```
