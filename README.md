@@ -397,3 +397,5 @@ UI Layer - Update the UI <br>
 DATA - LIVE
 - websockets : THere is no interval in the data fetching, everything happens in the real time. Another example is trading application.
 - API polling example - Gmail, in Java earlier I have seen batch processing from microservice to AEM. There we're polling data in certain interval and sending the data.
+
+
