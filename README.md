@@ -387,7 +387,7 @@ reducers: {
     cacheResults: (state, action) => {
       state = Object.assign(state, action.payload);
     },
-```
+``
 # Live Feature in youtube:
 
 ### Challenges:
@@ -422,4 +422,8 @@ findPrime(text);
 
 The above code snippet is doing that untill and unless there is new data in the text, cache all the value.<br>
 so now if I calculate large number value and use the toggle to dark and light UI then it will not re-render the value becuase it is already cached.<br>
+we are chaching the result of the function. useMemo helps us to cache the result of the funtion.
+
+
+### useCallBack
 
