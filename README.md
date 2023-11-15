@@ -472,5 +472,103 @@ export default Demo;
 With the help of useCallBack hook we cache the whole function.<br>
 
 ### useRef
+- lets you refrence a value that is not needed for rendering<br>
+simple language if you want a value to persist during the render cycle then you'll need the useRef.
+
+<br>
+For example there is a simple let variable and a state varibale.
+<br>
+if we increase the let variable when click on the button then it will increase in the background but doesn't render in the UI.
+<br>
+if we have a state variable and we increase the variable then it will persist and re-render the UI everytime the state value change, it will also display that change in the UI<br>
+but in every re-render the let variable will loose its persistance and initialize to zero.<br>
+
+
+### Here comes the use of useRef:
+```
+const ref = useRef(initialValue);
+```
+```
+import { useState, useRef, useEffect } from "react";
+
+const Demo2 = () => {
+  const [y, setY] = useState(0);
+  let x = 0;
+
+  const ref = useRef(0);
+  /** not like => ref = 0
+   * ref = { current: 0 }
+   *
+   *
+   * */
+
+  console.log("Rendering....");
+
+  const i = useRef(null);
+  // let i = {
+  //   current: null,
+  // };
+  useEffect(() => {
+    if (i.current) return;
+    i.current = setInterval(() => {
+      //console.log("Namaste React", Math.random());
+    }, 1000);
+  }, []);
+
+  return (
+    <div className="m-4 p-2 bg-slate-50 border border-black w-96 h-96">
+      <div>
+        <button
+          className="bg-green-100 p-2 m-4"
+          onClick={() => {
+            x = x + 1;
+            console.log("x=" + x);
+          }}
+        >
+          Increase x
+        </button>
+        <span className="font-bold text-xl">Let = {x}</span>
+      </div>
+      <div>
+        <button
+          className="bg-green-100 p-2 m-4"
+          onClick={() => {
+            setY(y + 1);
+          }}
+        >
+          Increase Y
+        </button>
+        <span className="font-bold text-xl">State = {y}</span>
+      </div>
+      <div>
+        <button
+          className="bg-green-100 p-2 m-4"
+          onClick={() => {
+            ref.current = ref.current + 1;
+            console.log("ref=", ref.current);
+          }}
+        >
+          Increase Ref
+        </button>
+        <span className="font-bold text-xl">Ref = {ref.current}</span>
+      </div>
+      <button
+        className="bg-red-900 p-4 m-4 text-white font-bold rounded-lg"
+        onClick={() => {
+          clearInterval(i.current);
+        }}
+      >
+        Stop Printing
+      </button>
+    </div>
+  );
+};
+export default Demo2;
+```
+useRef will not render the value but it will keep on increasing in the background and once the page is re-render by somehow, in above case if we click on increase Y button then <br>
+it will re-render the component and at that time only the value of ref will be shown.<br>
+
+- first useRef will keep on increasing the value in the background but doesn't show that increased value in the UI.
+- second when somehow the re-render processs occurs in the UI then the increase value is shown on the UI. 
 
 
