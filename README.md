@@ -399,3 +399,27 @@ DATA - LIVE
 - API polling example - Gmail, in Java earlier I have seen batch processing from microservice to AEM. There we're polling data in certain interval and sending the data.
 
 
+# use Memo:
+It is a hook that lets you cache the value between re-renders.<br>
+
+Whenever there is heavy operation then between the re-renders of data, the UI may get froze and user screen may get hang at that time we can make use of useMemo<br>
+
+In project we saw that, while calculating the nth prime number when there was large number and when we toggle from dark UI to light UI the screen froze.<br>
+why?
+Because we are first calculating the prime number which is heavy in itself and when we toggle from dark UI to light UI the state value change and <br>
+re-render happens and with dark UI its calculating the prime number again.<br>
+
+Why should we even calcuate the prime number again which was already calculated earlier??????<br>
+This is the PROBLEM
+
+we're solving this problem with the help of useMemo HOOK and that's why this hook was introduced
+
+```
+const prime = useMemo(()=>{
+findPrime(text);
+},[text])
+```
+
+The above code snippet is doing that untill and unless there is new data in the text, cache all the value.<br>
+so now if I calculate large number value and use the toggle to dark and light UI then it will not re-render the value becuase it is already cached.<br>
+
